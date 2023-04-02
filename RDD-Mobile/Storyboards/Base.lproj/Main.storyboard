@@ -132,6 +132,10 @@
                         <viewLayoutGuide key="safeArea" id="6Dh-xn-1xs"/>
                         <color key="backgroundColor" red="0.1027915313" green="0.1247970157" blue="0.15473985179999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
+                    <connections>
+                        <outlet property="cameraIconRef" destination="RV0-ju-DK9" id="My7-qL-7XY"/>
+                        <outlet property="locationIconRef" destination="Daw-IK-fAr" id="cRK-Kt-mrl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="opU-Sd-ftn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

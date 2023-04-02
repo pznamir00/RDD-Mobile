@@ -19,8 +19,7 @@ class OverviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self._configureMap()
-        
-        self.showTableView()
+        self._configureDetailsSheet()
     }
     
     private func _configureMap() -> Void {
@@ -28,28 +27,36 @@ class OverviewViewController: UIViewController {
             center: CLLocationCoordinate2D(latitude: 50, longitude: 14),
             span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
         )
+        
         self.map.setRegion(region, animated: true)
     }
     
-    func showTableView(){
-        let details = DetailsModalViewController()
-        details.isModalInPresentation = true
+    private func _configureDetailsSheet(){
+        let details = self.storyboard?.instantiateViewController(identifier: "testSB")
+        details!.isModalInPresentation = true
         
-        if let sheet = details.sheetPresentationController {
-            let superSmallDetent = self._getSuperSmallDetent()
-            sheet.detents = [superSmallDetent, .medium()]
-            sheet.largestUndimmedDetentIdentifier = .medium
-            sheet.selectedDetentIdentifier = superSmallDetent.identifier
+        if let sheet = details!.sheetPresentationController {
+            let (hiddenDetent, openDetent) = self._getCustomDetents()
+            sheet.detents = [hiddenDetent, openDetent]
+            sheet.largestUndimmedDetentIdentifier = openDetent.identifier
+            sheet.selectedDetentIdentifier = hiddenDetent.identifier
             sheet.preferredCornerRadius = 20
         }
         
-        self.present(details, animated: true)
+        self.present(details!, animated: true)
     }
     
-    private func _getSuperSmallDetent() -> UISheetPresentationController.Detent {
-        let id = UISheetPresentationController.Detent.Identifier("superSmall")
-        return UISheetPresentationController.Detent.custom(identifier: id) { context in
+    private func _getCustomDetents() -> (UISheetPresentationController.Detent, UISheetPresentationController.Detent) {
+        let hiddenDetentId = UISheetPresentationController.Detent.Identifier("hiddenDetent")
+        let hiddenDetent = UISheetPresentationController.Detent.custom(identifier: hiddenDetentId) { context in
             return 10
         }
+        
+        let openDetentId = UISheetPresentationController.Detent.Identifier("openDetent")
+        let openDetent = UISheetPresentationController.Detent.custom(identifier: openDetentId) { context in
+            return 200
+        }
+        
+        return (hiddenDetent, openDetent)
     }
 }

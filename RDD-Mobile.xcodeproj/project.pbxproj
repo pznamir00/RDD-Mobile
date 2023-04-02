@@ -16,6 +16,7 @@
 		4924F37129D99E8E004631AB /* CameraHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924F37029D99E8E004631AB /* CameraHandler.swift */; };
 		4924F37529D9B035004631AB /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924F37429D9B035004631AB /* CameraViewController.swift */; };
 		4924F37A29D9B1CC004631AB /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924F37929D9B1CC004631AB /* OverviewViewController.swift */; };
+		4924F38129D9F1D3004631AB /* DetailsModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924F38029D9F1D3004631AB /* DetailsModalViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		4924F37029D99E8E004631AB /* CameraHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraHandler.swift; sourceTree = "<group>"; };
 		4924F37429D9B035004631AB /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		4924F37929D9B1CC004631AB /* OverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
+		4924F38029D9F1D3004631AB /* DetailsModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsModalViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 				4924F37929D9B1CC004631AB /* OverviewViewController.swift */,
 				4924F36029D997B0004631AB /* ViewController.swift */,
 				4924F37429D9B035004631AB /* CameraViewController.swift */,
+				4924F38029D9F1D3004631AB /* DetailsModalViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4924F38129D9F1D3004631AB /* DetailsModalViewController.swift in Sources */,
 				4924F36129D997B0004631AB /* ViewController.swift in Sources */,
 				4924F37529D9B035004631AB /* CameraViewController.swift in Sources */,
 				4924F37129D99E8E004631AB /* CameraHandler.swift in Sources */,

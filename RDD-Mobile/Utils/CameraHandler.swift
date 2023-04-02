@@ -14,10 +14,13 @@ import CoreVideo
 class CameraHandler: NSObject {
     private var isRecording = false
     private let session = AVCaptureSession()
-    private var output: AVCaptureVideoDataOutput
-    private var layer: AVCaptureVideoPreviewLayer
+    private var output: AVCaptureVideoDataOutput?
+    private var layer: AVCaptureVideoPreviewLayer?
+    var delegate: ViewController?
     
-    func onInit(){
+    func setup(delegate: ViewController){
+        self.delegate = delegate
+        
         self.session.beginConfiguration()
         self.session.sessionPreset = .vga640x480
         
@@ -38,8 +41,8 @@ class CameraHandler: NSObject {
     
     private func _loadLayer() {
         self.layer = AVCaptureVideoPreviewLayer(session: self.session)
-        self.layer.videoGravity = AVLayerVideoGravity.resizeAspect
-        self.layer.connection?.videoOrientation = .portrait
+        self.layer!.videoGravity = AVLayerVideoGravity.resizeAspect
+        self.layer!.connection?.videoOrientation = .portrait
     }
     
     private func _loadAVInput() -> Void {
@@ -56,11 +59,11 @@ class CameraHandler: NSObject {
     
     private func _loadOutput() -> Void {
         self.output = AVCaptureVideoDataOutput()
-        self.output.alwaysDiscardsLateVideoFrames = true
-        self.output.connection(with: AVMediaType.video)?.videoOrientation = .portrait
+        self.output!.alwaysDiscardsLateVideoFrames = true
+        self.output!.connection(with: AVMediaType.video)?.videoOrientation = .portrait
         
-        if self.session.canAddOutput(self.output) {
-            self.session.addOutput(self.output)
+        if self.session.canAddOutput(self.output!) {
+            self.session.addOutput(self.output!)
         }
     }
     

@@ -3,7 +3,7 @@ import AVKit
 import CoreLocation
 
 
-class DetailsModalViewController : UIViewController {
+class DetailsModalViewController : UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var locationIconRef: UIImageView!
     @IBOutlet weak var cameraIconRef: UIImageView!
     private let locationManager = CLLocationManager()
@@ -13,17 +13,25 @@ class DetailsModalViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Overview"
-        self.isCameraAvailable = self._checkIsCameraavailable()
+                
+        self.isCameraAvailable = self._checkIsCameraAvailable()
         self.isLocationAvailable = self._checkIsLocationAvailable()
-        self._updateIconsTintColors()
+        
+        self._setImageViewColorBaseOnCondition(
+            view: self.cameraIconRef,
+            condition: self.isCameraAvailable
+        )
+        self._setImageViewColorBaseOnCondition(
+            view: self.locationIconRef,
+            condition: self.isLocationAvailable
+        )
     }
     
-    private func _updateIconsTintColors(){
-        self.cameraIconRef.tintColor = self.isCameraAvailable ? UIColor.blue : UIColor.red
-        self.locationIconRef.tintColor = self.isLocationAvailable ? UIColor.blue : UIColor.red
+    private func _setImageViewColorBaseOnCondition(view: UIImageView, condition: Bool){
+        view.tintColor = condition ? FEATURE_AVAILABLE_COLOR : FEATURE_UNAVAILABLE_COLOR
     }
     
-    private func _checkIsCameraavailable() -> Bool {
+    private func _checkIsCameraAvailable() -> Bool {
         if AVCaptureDevice.authorizationStatus(for: AVMediaType.video) ==  AVAuthorizationStatus.authorized {
             return true
         } else {
@@ -36,17 +44,12 @@ class DetailsModalViewController : UIViewController {
     }
     
     private func _checkIsLocationAvailable() -> Bool {
-        if CLLocationManager.locationServicesEnabled() {
-            switch self.locationManager.authorizationStatus {
-                case .notDetermined, .restricted, .denied:
-                    return false
-                case .authorizedAlways, .authorizedWhenInUse:
-                    return true
-                @unknown default:
-                    break
-            }
+        guard CLLocationManager.locationServicesEnabled() else {
+            return false
         }
-        
-        return false
+        return [
+            .authorizedAlways,
+            .authorizedWhenInUse
+        ].contains(CLLocationManager.authorizationStatus())
     }
 }

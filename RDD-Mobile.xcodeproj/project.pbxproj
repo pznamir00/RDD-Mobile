@@ -17,6 +17,8 @@
 		4924F37529D9B035004631AB /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924F37429D9B035004631AB /* CameraViewController.swift */; };
 		4924F37A29D9B1CC004631AB /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924F37929D9B1CC004631AB /* OverviewViewController.swift */; };
 		4924F38129D9F1D3004631AB /* DetailsModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924F38029D9F1D3004631AB /* DetailsModalViewController.swift */; };
+		4963B32829DA420D003BE2D8 /* DamagePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4963B32729DA420D003BE2D8 /* DamagePoint.swift */; };
+		49EF57B929DB71C1003A039C /* StyleConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EF57B829DB71C1003A039C /* StyleConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		4924F37429D9B035004631AB /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		4924F37929D9B1CC004631AB /* OverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
 		4924F38029D9F1D3004631AB /* DetailsModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsModalViewController.swift; sourceTree = "<group>"; };
+		4963B32729DA420D003BE2D8 /* DamagePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamagePoint.swift; sourceTree = "<group>"; };
+		49EF57B829DB71C1003A039C /* StyleConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleConfig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +91,9 @@
 		4924F37729D9B089004631AB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				49EF57B829DB71C1003A039C /* StyleConfig.swift */,
 				4924F37029D99E8E004631AB /* CameraHandler.swift */,
+				4963B32729DA420D003BE2D8 /* DamagePoint.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -179,8 +185,10 @@
 				4924F37529D9B035004631AB /* CameraViewController.swift in Sources */,
 				4924F37129D99E8E004631AB /* CameraHandler.swift in Sources */,
 				4924F35D29D997B0004631AB /* AppDelegate.swift in Sources */,
+				4963B32829DA420D003BE2D8 /* DamagePoint.swift in Sources */,
 				4924F35F29D997B0004631AB /* SceneDelegate.swift in Sources */,
 				4924F37A29D9B1CC004631AB /* OverviewViewController.swift in Sources */,
+				49EF57B929DB71C1003A039C /* StyleConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

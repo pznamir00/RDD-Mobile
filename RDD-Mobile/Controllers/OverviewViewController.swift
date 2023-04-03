@@ -27,8 +27,9 @@ class OverviewViewController: UIViewController {
             center: CLLocationCoordinate2D(latitude: 50, longitude: 14),
             span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
         )
-        
         self.map.setRegion(region, animated: true)
+        
+        self.overrideUserInterfaceStyle = .dark
     }
     
     private func _configureDetailsSheet(){
@@ -38,6 +39,7 @@ class OverviewViewController: UIViewController {
         if let sheet = details!.sheetPresentationController {
             let (hiddenDetent, openDetent) = self._getCustomDetents()
             sheet.detents = [hiddenDetent, openDetent]
+            sheet.prefersGrabberVisible = true
             sheet.largestUndimmedDetentIdentifier = openDetent.identifier
             sheet.selectedDetentIdentifier = hiddenDetent.identifier
             sheet.preferredCornerRadius = 20

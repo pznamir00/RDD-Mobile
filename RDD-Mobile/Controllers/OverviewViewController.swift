@@ -9,27 +9,60 @@ import UIKit
 import MapKit
 import Vision
 import CoreMedia
+import CoreLocation
 
 
-class OverviewViewController: UIViewController {
+class OverviewViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var accessTable: UITableView!
     @IBOutlet weak var pointsCounter: UILabel!
     @IBOutlet weak var map: MKMapView!
+    private let locationManager = CLLocationManager()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self._configureMap()
+        self._configureMapAndLocation()
         self._configureDetailsSheet()
     }
     
-    private func _configureMap() -> Void {
-        let region = MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: 50, longitude: 14),
-            span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
-        )
-        self.map.setRegion(region, animated: true)
+    override func viewDidDisappear(_ animated: Bool) {
+        if CLLocationManager.locationServicesEnabled() {
+            self.locationManager.stopUpdatingLocation()
+        }
+    }
+    
+    func locationManager(
+        _ manager: CLLocationManager,
+        didUpdateLocations locations: [CLLocation]
+    ) {
+        let location = locations.last! as CLLocation
         
+        print("locations: \(locations)")
+        
+        let center = CLLocationCoordinate2D(
+            latitude: location.coordinate.latitude,
+            longitude: location.coordinate.longitude
+        )
+        
+        let region = MKCoordinateRegion(
+            center: center,
+            span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        )
+        
+        self.map.setRegion(region, animated: true)
+    }
+    
+    private func _configureMapAndLocation() {
         self.overrideUserInterfaceStyle = .dark
+        
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
     }
     
     private func _configureDetailsSheet(){

@@ -2,10 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Privacy - Locations Always and When In Use Usage Description</key>
-	<string>match prediction with location</string>
 	<key>NSCameraUsageDescription</key>
 	<string>do a prediction</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Description</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Description</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Description</string>
 	<key>CFBundleIdentifier</key>
 	<string></string>
 	<key>UIApplicationSceneManifest</key>

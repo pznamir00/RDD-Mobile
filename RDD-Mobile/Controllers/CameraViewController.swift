@@ -32,7 +32,7 @@ class CameraViewController: UIViewController {
         self.cameraHandler.setRecording(false)
     }
     
-    func captureOutput(buffer: CVPixelBuffer?, t: CMTime) {
-        self.predictionHandler.predict(buffer: buffer, t: t)
+    func captureOutput(buffer: CVPixelBuffer?) {
+        return self.predictionHandler.predict(buffer: buffer)
     }
 }

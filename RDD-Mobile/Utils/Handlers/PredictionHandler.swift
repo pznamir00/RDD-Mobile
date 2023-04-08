@@ -21,7 +21,7 @@ class PredictionHandler {
         self._loadModel()
     }
     
-    func predict(buffer: CVPixelBuffer?, t: CMTime) {
+    func predict(buffer: CVPixelBuffer?) {
         if self.request != nil, !self.isPredicting, let pixelBuffer = buffer {
             self.isPredicting = true
             guard let req = self.request else { fatalError() }

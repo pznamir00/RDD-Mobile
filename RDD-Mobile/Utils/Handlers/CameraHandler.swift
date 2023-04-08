@@ -9,15 +9,18 @@ import Foundation
 import UIKit
 import AVFoundation
 import CoreVideo
+import Combine
 
 
 class CameraHandler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     private var isRecording = false
     private let session = AVCaptureSession()
     private let output = AVCaptureVideoDataOutput()
-    private var lastT = CMTime()
+    private var subscription = Set<AnyCancellable>()
+    private let publisher = PassthroughSubject<CMSampleBuffer, Never>()
     var layer: AVCaptureVideoPreviewLayer?
     var delegate: CameraViewController?
+
 
     func setup(delegate: CameraViewController) {
         self.delegate = delegate
@@ -33,6 +36,19 @@ class CameraHandler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         
         self.bindWithView(cameraView: delegate.cameraView)
         self.setRecording(true)
+        
+        
+        self.publisher
+            .throttle(
+                for: .seconds(1 / FPS),
+                scheduler: DispatchQueue.main,
+                latest: true
+            )
+            .sink { buffer in
+                let imgBuff = CMSampleBufferGetImageBuffer(buffer)
+                self.delegate?.captureOutput(buffer: imgBuff)
+            }
+            .store(in: &self.subscription)
     }
     
     func bindWithView(cameraView: UIView) {
@@ -48,6 +64,10 @@ class CameraHandler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         } else {
             self.session.stopRunning()
         }
+    }
+    
+    func captureOutput(_ out: AVCaptureOutput, didOutput bfr: CMSampleBuffer, from conn: AVCaptureConnection) {
+        self.publisher.send(bfr)
     }
     
     private func _loadInput() -> Void {
@@ -94,21 +114,4 @@ class CameraHandler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
 
         self.output.connection(with: .video)!.videoOrientation = .portrait
     }
-    
-    public func captureOutput(
-        _ output: AVCaptureOutput,
-        didOutput buffer: CMSampleBuffer,
-        from connection: AVCaptureConnection
-    ) {        
-        let t = CMSampleBufferGetPresentationTimeStamp(buffer)
-        let deltaT = t - self.lastT
-        if deltaT < CMTimeMake(value: 1, timescale: Int32(FPS)) {
-            return
-        }
-        
-        self.lastT = t
-        let imgBuff = CMSampleBufferGetImageBuffer(buffer)
-        self.delegate?.captureOutput(buffer: imgBuff, t: t)
-    }
 }
-

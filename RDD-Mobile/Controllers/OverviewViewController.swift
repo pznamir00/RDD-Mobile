@@ -36,9 +36,7 @@ class OverviewViewController: UIViewController, CLLocationManagerDelegate {
         didUpdateLocations locations: [CLLocation]
     ) {
         let location = locations.last! as CLLocation
-        
-        print("locations: \(locations)")
-        
+                
         let center = CLLocationCoordinate2D(
             latitude: location.coordinate.latitude,
             longitude: location.coordinate.longitude
@@ -66,7 +64,7 @@ class OverviewViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     private func _configureDetailsSheet(){
-        let details = self.storyboard?.instantiateViewController(identifier: "testSB")
+        let details = self.storyboard?.instantiateViewController(identifier: "bottomSheet")
         details!.isModalInPresentation = true
         
         if let sheet = details!.sheetPresentationController {
@@ -84,7 +82,7 @@ class OverviewViewController: UIViewController, CLLocationManagerDelegate {
     private func _getCustomDetents() -> (UISheetPresentationController.Detent, UISheetPresentationController.Detent) {
         let hiddenDetentId = UISheetPresentationController.Detent.Identifier("hiddenDetent")
         let hiddenDetent = UISheetPresentationController.Detent.custom(identifier: hiddenDetentId) { context in
-            return 10
+            return 50
         }
         
         let openDetentId = UISheetPresentationController.Detent.Identifier("openDetent")

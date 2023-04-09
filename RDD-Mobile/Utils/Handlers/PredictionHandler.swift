@@ -10,20 +10,36 @@ import CoreMedia
 import Vision
 
 
-class PredictionHandler {
-    private var layer: PredictionLayerView?
+class PredictionHandler: ContextFeatureHandler {
+    typealias T = PredictionLayerView
+    
     private var request: VNCoreMLRequest?
-    private var isPredicting = false
     private let semaphore = DispatchSemaphore(value: 1)
     
-    func setup(layerView: PredictionLayerView){
-        self.layer = layerView
-        self._loadModel()
+    internal var isProcessing = false
+    internal var isLoading = true
+    internal var context: PredictionLayerView?
+    
+    internal func setup(context: PredictionLayerView){
+        self.context = context
+
+        if #available(iOS 14.0, *) {
+            if let model = try? VNCoreMLModel(for: holesDetection().model) {
+                self.request = VNCoreMLRequest(
+                    model: model,
+                    completionHandler: self._onPredictionComplete
+                )
+                self.isLoading = false
+                return
+            }
+        }
+        
+        fatalError("Failed to load model")
     }
     
     func predict(buffer: CVPixelBuffer?) {
-        if self.request != nil, !self.isPredicting, let pixelBuffer = buffer {
-            self.isPredicting = true
+        if self.request != nil, !self.isProcessing, let pixelBuffer = buffer {
+            self.isProcessing = true
             guard let req = self.request else { fatalError() }
             self.semaphore.wait()
             let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer)
@@ -31,29 +47,15 @@ class PredictionHandler {
         }
     }
     
-    private func _loadModel() {
-        if #available(iOS 14.0, *) {
-            if let model = try? VNCoreMLModel(for: holesDetection().model) {
-                self.request = VNCoreMLRequest(
-                    model: model,
-                    completionHandler: self._onPredictionComplete
-                )
-                return
-            }
-        }
-        
-        fatalError("fail to create vision model")
-    }
-    
     private func _onPredictionComplete(request: VNRequest, error: Error?) {
         if let rawPredictions = request.results as? [VNRecognizedObjectObservation] {
             let predictions = rawPredictions.map({ Prediction(rawPrediction: $0) })
             DispatchQueue.main.async {
-                self.layer!.draw(predictions: predictions)
-                self.isPredicting = false
+                self.context!.draw(predictions: predictions)
+                self.isProcessing = false
             }
         } else {
-            self.isPredicting = false
+            self.isProcessing = false
         }
         
         self.semaphore.signal()

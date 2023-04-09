@@ -18,18 +18,18 @@ class CameraViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Camera"
-        self.cameraHandler.setup(delegate: self)
-        self.predictionHandler.setup(layerView: self.predictionLayerView)
+        self.cameraHandler.setup(context: self)
+        self.predictionHandler.setup(context: self.predictionLayerView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.cameraHandler.setRecording(true)
+        self.cameraHandler.setProcessing(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.cameraHandler.setRecording(false)
+        self.cameraHandler.setProcessing(false)
     }
     
     func captureOutput(buffer: CVPixelBuffer?) {

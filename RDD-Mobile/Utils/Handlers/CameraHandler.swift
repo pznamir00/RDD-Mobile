@@ -12,31 +12,25 @@ import CoreVideo
 import Combine
 
 
-class CameraHandler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
-    private var isRecording = false
+class CameraHandler:
+    NSObject,
+    AVCaptureVideoDataOutputSampleBufferDelegate,
+    ContextFeatureHandler
+{
+    typealias T = CameraViewController
+    
+    internal var isLoading = true
+    internal var isProcessing = false
+    internal var context: CameraViewController?
+    
     private let session = AVCaptureSession()
     private let output = AVCaptureVideoDataOutput()
     private var subscription = Set<AnyCancellable>()
     private let publisher = PassthroughSubject<CMSampleBuffer, Never>()
-    var layer: AVCaptureVideoPreviewLayer?
-    var delegate: CameraViewController?
+    private var layer: AVCaptureVideoPreviewLayer?
 
-
-    func setup(delegate: CameraViewController) {
-        self.delegate = delegate
-        
-        self.session.beginConfiguration()
-        self.session.sessionPreset = .vga640x480
-        
-        self._loadInput()
-        self._loadLayer()
-        self._loadOutput()
-                
-        self.session.commitConfiguration()
-        
-        self.bindWithView(cameraView: delegate.cameraView)
-        self.setRecording(true)
-        
+    override init() {
+        super.init()
         
         self.publisher
             .throttle(
@@ -46,28 +40,39 @@ class CameraHandler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             )
             .sink { buffer in
                 let imgBuff = CMSampleBufferGetImageBuffer(buffer)
-                self.delegate?.captureOutput(buffer: imgBuff)
+                self.context?.captureOutput(buffer: imgBuff)
             }
             .store(in: &self.subscription)
     }
-    
-    func bindWithView(cameraView: UIView) {
-        if let _layer = self.layer {
-            cameraView.layer.addSublayer(_layer)
-            self.layer!.frame = cameraView.bounds
-        }
+
+    func setup(context: CameraViewController) {
+        self.context = context
+        self.session.beginConfiguration()
+        self.session.sessionPreset = .vga640x480
+        self._loadInput()
+        self._loadLayer()
+        self._loadOutput()
+        self.session.commitConfiguration()
+        self._bindWithView(cameraView: context.cameraView)
+        self.setProcessing(true)
+        self.isLoading = false
     }
     
-    func setRecording(_ value: Bool) -> Void {
-        if value {
-            self.session.startRunning()
-        } else {
-            self.session.stopRunning()
-        }
+    func setProcessing(_ value: Bool) -> Void {
+        self.isProcessing = value
+        if value { self.session.startRunning() }
+        else { self.session.stopRunning() }
     }
     
     func captureOutput(_ out: AVCaptureOutput, didOutput bfr: CMSampleBuffer, from conn: AVCaptureConnection) {
         self.publisher.send(bfr)
+    }
+    
+    private func _bindWithView(cameraView: UIView) {
+        if let _layer = self.layer {
+            cameraView.layer.addSublayer(_layer)
+            self.layer!.frame = cameraView.bounds
+        }
     }
     
     private func _loadInput() -> Void {

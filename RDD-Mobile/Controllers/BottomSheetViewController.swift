@@ -30,10 +30,6 @@ class BottomSheetViewController : UIViewController, CLLocationManagerDelegate {
         BottomSheetViewController.delegate = self
     }
     
-    private func _setImageViewColorBaseOnCondition(view: UIImageView, condition: Bool){
-        view.tintColor = condition ? FEATURE_AVAILABLE_COLOR : FEATURE_UNAVAILABLE_COLOR
-    }
-    
     private func _checkIsCameraAvailable() -> Bool {
         if AVCaptureDevice.authorizationStatus(for: AVMediaType.video) ==  AVAuthorizationStatus.authorized {
             return true
@@ -41,7 +37,7 @@ class BottomSheetViewController : UIViewController, CLLocationManagerDelegate {
             var granted = false
             AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (_granted: Bool) -> Void in
                granted = _granted
-           })
+            })
             return granted
         }
     }

@@ -31,12 +31,12 @@ class CameraViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.cameraHandler.setProcessing(true)
+        self.cameraHandler.isProcessing = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.cameraHandler.setProcessing(false)
+        self.cameraHandler.isProcessing = false
     }
     
     func initializeSavingToStoreAction(debouceTime: CGFloat) {

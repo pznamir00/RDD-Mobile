@@ -18,7 +18,16 @@ class CameraHandler:
     CameraFeatureHandler
 {
     internal var isLoading = true
-    internal var isProcessing = false
+    internal var isProcessing = false {
+        didSet {
+            if self.isProcessing {
+                self.session.startRunning()
+            }
+            else {
+                self.session.stopRunning()
+            }
+        }
+    }
     internal var delegate: CameraViewController?
     private let session = AVCaptureSession()
     private let output = AVCaptureVideoDataOutput()
@@ -34,19 +43,13 @@ class CameraHandler:
         self._loadOutput()
         self.session.commitConfiguration()
         self._bindWithView(cameraView: delegate.cameraView)
-        self.setProcessing(true)
+        self.isProcessing = true
         self.isLoading = false
         
         self.receivedBufferFromOutputAction = DebounceAction(CGFloat(1 / FPS)) { buffer in
             let imgBuff = CMSampleBufferGetImageBuffer(buffer)
             self.delegate?.captureOutput(buffer: imgBuff)
         }
-    }
-    
-    func setProcessing(_ value: Bool) -> Void {
-        self.isProcessing = value
-        if value { self.session.startRunning() }
-        else { self.session.stopRunning() }
     }
     
     func captureOutput(_ out: AVCaptureOutput, didOutput bfr: CMSampleBuffer, from conn: AVCaptureConnection) {

@@ -8,12 +8,10 @@
 import Foundation
 
 
-protocol ContextFeatureHandler {
-    associatedtype T
-    
-    var context: T? { get set }
+protocol CameraFeatureHandler {
+    var delegate: CameraViewController? { get set }
     var isProcessing: Bool { get set }
     var isLoading: Bool { get set }
     
-    func setup(context: T) -> Void
+    func setup(delegate: CameraViewController) -> Void
 }

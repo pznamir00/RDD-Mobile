@@ -10,18 +10,15 @@ import CoreMedia
 import Vision
 
 
-class PredictionHandler: ContextFeatureHandler {
-    typealias T = PredictionLayerView
-    
+class PredictionHandler: CameraFeatureHandler {
     private var request: VNCoreMLRequest?
     private let semaphore = DispatchSemaphore(value: 1)
-    
     internal var isProcessing = false
     internal var isLoading = true
-    internal var context: PredictionLayerView?
+    internal var delegate: CameraViewController?
     
-    internal func setup(context: PredictionLayerView){
-        self.context = context
+    internal func setup(delegate: CameraViewController){
+        self.delegate = delegate
 
         if #available(iOS 14.0, *) {
             if let model = try? VNCoreMLModel(for: holesDetection().model) {
@@ -51,7 +48,7 @@ class PredictionHandler: ContextFeatureHandler {
         if let rawPredictions = request.results as? [VNRecognizedObjectObservation] {
             let predictions = rawPredictions.map({ Prediction(rawPrediction: $0) })
             DispatchQueue.main.async {
-                self.context!.draw(predictions: predictions)
+                self.delegate!.onPredictionComplete(predictions: predictions)
                 self.isProcessing = false
             }
         } else {

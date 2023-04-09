@@ -15,47 +15,32 @@ import Combine
 class CameraHandler:
     NSObject,
     AVCaptureVideoDataOutputSampleBufferDelegate,
-    ContextFeatureHandler
+    CameraFeatureHandler
 {
-    typealias T = CameraViewController
-    
     internal var isLoading = true
     internal var isProcessing = false
-    internal var context: CameraViewController?
-    
+    internal var delegate: CameraViewController?
     private let session = AVCaptureSession()
     private let output = AVCaptureVideoDataOutput()
-    private var subscription = Set<AnyCancellable>()
-    private let publisher = PassthroughSubject<CMSampleBuffer, Never>()
     private var layer: AVCaptureVideoPreviewLayer?
+    private var receivedBufferFromOutputAction: DebounceAction<CMSampleBuffer>?
 
-    override init() {
-        super.init()
-        
-        self.publisher
-            .throttle(
-                for: .seconds(1 / FPS),
-                scheduler: DispatchQueue.main,
-                latest: true
-            )
-            .sink { buffer in
-                let imgBuff = CMSampleBufferGetImageBuffer(buffer)
-                self.context?.captureOutput(buffer: imgBuff)
-            }
-            .store(in: &self.subscription)
-    }
-
-    func setup(context: CameraViewController) {
-        self.context = context
+    func setup(delegate: CameraViewController) {
+        self.delegate = delegate
         self.session.beginConfiguration()
         self.session.sessionPreset = .vga640x480
         self._loadInput()
         self._loadLayer()
         self._loadOutput()
         self.session.commitConfiguration()
-        self._bindWithView(cameraView: context.cameraView)
+        self._bindWithView(cameraView: delegate.cameraView)
         self.setProcessing(true)
         self.isLoading = false
+        
+        self.receivedBufferFromOutputAction = DebounceAction(CGFloat(1 / FPS)) { buffer in
+            let imgBuff = CMSampleBufferGetImageBuffer(buffer)
+            self.delegate?.captureOutput(buffer: imgBuff)
+        }
     }
     
     func setProcessing(_ value: Bool) -> Void {
@@ -65,7 +50,7 @@ class CameraHandler:
     }
     
     func captureOutput(_ out: AVCaptureOutput, didOutput bfr: CMSampleBuffer, from conn: AVCaptureConnection) {
-        self.publisher.send(bfr)
+        self.receivedBufferFromOutputAction?.emit(value: bfr)
     }
     
     private func _bindWithView(cameraView: UIView) {

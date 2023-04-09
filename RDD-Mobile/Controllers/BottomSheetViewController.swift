@@ -4,11 +4,21 @@ import CoreLocation
 
 
 class BottomSheetViewController : UIViewController, CLLocationManagerDelegate {
+    static var delegate: BottomSheetViewController?
     @IBOutlet weak var locationIconRef: UIImageView!
     @IBOutlet weak var cameraIconRef: UIImageView!
+    @IBOutlet weak var damagePointsNumberLabel: UILabel!
     private let locationManager = CLLocationManager()
     private var isCameraAvailable = false
     private var isLocationAvailable = false
+    
+    @IBAction func onClearDamagePointsFromStoreClick(_ sender: Any) {
+        OverviewViewController.delegate?.store.damagePoints = []
+    }
+    
+    @IBAction func onFrequencySliderChange(_ slider: UISlider) {
+        OverviewViewController.delegate?.savingFrequency = Int(slider.value)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,6 +26,8 @@ class BottomSheetViewController : UIViewController, CLLocationManagerDelegate {
                 
         self.isCameraAvailable = self._checkIsCameraAvailable()
         self.isLocationAvailable = self._checkIsLocationAvailable()
+        
+        BottomSheetViewController.delegate = self
     }
     
     private func _setImageViewColorBaseOnCondition(view: UIImageView, condition: Bool){
@@ -38,6 +50,7 @@ class BottomSheetViewController : UIViewController, CLLocationManagerDelegate {
         guard CLLocationManager.locationServicesEnabled() else {
             return false
         }
+        
         return [
             .authorizedAlways,
             .authorizedWhenInUse

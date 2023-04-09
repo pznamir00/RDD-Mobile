@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4912ACF229E19D22004AD339 /* Prediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4912ACF129E19D22004AD339 /* Prediction.swift */; };
 		4912ACF529E1A296004AD339 /* PredictionLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4912ACF429E1A296004AD339 /* PredictionLayerView.swift */; };
-		4912ACF829E235E5004AD339 /* ContextFeatureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4912ACF729E235E5004AD339 /* ContextFeatureHandler.swift */; };
+		4912ACF829E235E5004AD339 /* CameraFeatureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4912ACF729E235E5004AD339 /* CameraFeatureHandler.swift */; };
 		4924F35D29D997B0004631AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924F35C29D997B0004631AB /* AppDelegate.swift */; };
 		4924F35F29D997B0004631AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924F35E29D997B0004631AB /* SceneDelegate.swift */; };
 		4924F36129D997B0004631AB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924F36029D997B0004631AB /* ViewController.swift */; };
@@ -20,6 +20,8 @@
 		4924F37529D9B035004631AB /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924F37429D9B035004631AB /* CameraViewController.swift */; };
 		4924F37A29D9B1CC004631AB /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924F37929D9B1CC004631AB /* OverviewViewController.swift */; };
 		4924F38129D9F1D3004631AB /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924F38029D9F1D3004631AB /* BottomSheetViewController.swift */; };
+		49288B6D29E2DC03008FC08B /* DamagePointsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49288B6C29E2DC03008FC08B /* DamagePointsStore.swift */; };
+		49288B6F29E2E1C1008FC08B /* DebounceAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49288B6E29E2E1C0008FC08B /* DebounceAction.swift */; };
 		49EF57B929DB71C1003A039C /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EF57B829DB71C1003A039C /* Config.swift */; };
 		49EF57BB29DB87FF003A039C /* PredictionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EF57BA29DB87FF003A039C /* PredictionHandler.swift */; };
 		49EF57BD29DB8877003A039C /* holesDetection.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 49EF57BC29DB8877003A039C /* holesDetection.mlmodel */; };
@@ -28,7 +30,7 @@
 /* Begin PBXFileReference section */
 		4912ACF129E19D22004AD339 /* Prediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prediction.swift; sourceTree = "<group>"; };
 		4912ACF429E1A296004AD339 /* PredictionLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionLayerView.swift; sourceTree = "<group>"; };
-		4912ACF729E235E5004AD339 /* ContextFeatureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextFeatureHandler.swift; sourceTree = "<group>"; };
+		4912ACF729E235E5004AD339 /* CameraFeatureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFeatureHandler.swift; sourceTree = "<group>"; };
 		4924F35929D997B0004631AB /* RDD-Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RDD-Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4924F35C29D997B0004631AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4924F35E29D997B0004631AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +43,8 @@
 		4924F37429D9B035004631AB /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		4924F37929D9B1CC004631AB /* OverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
 		4924F38029D9F1D3004631AB /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
+		49288B6C29E2DC03008FC08B /* DamagePointsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamagePointsStore.swift; sourceTree = "<group>"; };
+		49288B6E29E2E1C0008FC08B /* DebounceAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebounceAction.swift; sourceTree = "<group>"; };
 		49EF57B829DB71C1003A039C /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		49EF57BA29DB87FF003A039C /* PredictionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionHandler.swift; sourceTree = "<group>"; };
 		49EF57BC29DB8877003A039C /* holesDetection.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = holesDetection.mlmodel; sourceTree = "<group>"; };
@@ -65,14 +69,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		4912ACF629E1AAF6004AD339 /* Handlers */ = {
+		4912ACF629E1AAF6004AD339 /* CameraFeatureHandlers */ = {
 			isa = PBXGroup;
 			children = (
 				4924F37029D99E8E004631AB /* CameraHandler.swift */,
 				49EF57BA29DB87FF003A039C /* PredictionHandler.swift */,
-				4912ACF729E235E5004AD339 /* ContextFeatureHandler.swift */,
+				4912ACF729E235E5004AD339 /* CameraFeatureHandler.swift */,
 			);
-			path = Handlers;
+			path = CameraFeatureHandlers;
 			sourceTree = "<group>";
 		};
 		4924F35029D997B0004631AB = {
@@ -119,9 +123,11 @@
 			isa = PBXGroup;
 			children = (
 				49EF57BE29DB887D003A039C /* Model */,
-				4912ACF629E1AAF6004AD339 /* Handlers */,
+				4912ACF629E1AAF6004AD339 /* CameraFeatureHandlers */,
 				49EF57B829DB71C1003A039C /* Config.swift */,
 				4912ACF129E19D22004AD339 /* Prediction.swift */,
+				49288B6C29E2DC03008FC08B /* DamagePointsStore.swift */,
+				49288B6E29E2E1C0008FC08B /* DebounceAction.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -223,10 +229,12 @@
 				4924F37129D99E8E004631AB /* CameraHandler.swift in Sources */,
 				4924F35D29D997B0004631AB /* AppDelegate.swift in Sources */,
 				49EF57BB29DB87FF003A039C /* PredictionHandler.swift in Sources */,
-				4912ACF829E235E5004AD339 /* ContextFeatureHandler.swift in Sources */,
+				4912ACF829E235E5004AD339 /* CameraFeatureHandler.swift in Sources */,
 				4924F35F29D997B0004631AB /* SceneDelegate.swift in Sources */,
 				49EF57BD29DB8877003A039C /* holesDetection.mlmodel in Sources */,
 				4912ACF529E1A296004AD339 /* PredictionLayerView.swift in Sources */,
+				49288B6D29E2DC03008FC08B /* DamagePointsStore.swift in Sources */,
+				49288B6F29E2E1C1008FC08B /* DebounceAction.swift in Sources */,
 				4924F37A29D9B1CC004631AB /* OverviewViewController.swift in Sources */,
 				49EF57B929DB71C1003A039C /* Config.swift in Sources */,
 			);
